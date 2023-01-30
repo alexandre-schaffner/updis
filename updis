@@ -1,0 +1,26 @@
+#!/usr/bin/fish
+
+if test -e /home/mango/Downloads/discord-*\.tar\.gz
+    echo "Extracting Discord archive..."
+    tar -x -C /home/mango/Downloads/ -f /home/mango/Downloads/discord-*\.tar\.gz
+    if test -e /opt/Discord
+        echo "Removing old version of Discord..."
+        rm -rf /opt/Discord
+    else
+        echo "No older version found in /opt/"
+    end
+    if test -e /home/mango/Downloads/Discord
+        echo "Moving new version in /opt/Discord"
+        mv /home/mango/Downloads/Discord /opt/
+        echo "Removing archive"
+        rm /home/mango/Downloads/discord-*\.tar\.gz
+    else
+        echo "Extracted file not found" 1>&2
+        exit 84
+    end
+else
+    echo "No Discord update found in /home/Downloads/" 1>&2
+    exit 84
+end
+
+echo "Discord successfully updated !\n"
